@@ -1,6 +1,7 @@
 package org.elliotnash.randomicon.spigot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.elliotnash.randomicon.core.DiscordLoader;
+import org.elliotnash.randomicon.core.FileLoader;
 import org.elliotnash.randomicon.core.ImageListener;
 import org.elliotnash.randomicon.core.ImageLoader;
 
@@ -30,6 +32,7 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
     public static SpigotMain plugin;
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
+    public static FileConfiguration config;
     Random rand = new Random();
 
     @Override
@@ -37,10 +40,26 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
 
         plugin = this;
         bukkitAudiences = BukkitAudiences.create(plugin);
-        try {
-            imageLoader = new DiscordLoader(this, "NzY2NDc0ODAyNzM1MDg3NjM2.X4j5SQ.rcM6fU73hlIPEd_AxpvXz6wBzeI", "796624115951206412", getDataFolder().toString()+"/tmpicon");
-        } catch (LoginException e) {
-            e.printStackTrace();
+        config = getConfig();
+
+        if (!config.contains("discord")){
+            saveDefaultConfig();
+            config = getConfig();
+        }
+
+        boolean useDiscord = config.getBoolean("useDiscord");
+        String token = config.getString("token");
+        String channelId = config.getString("channelid");
+
+        if (useDiscord) {
+            try {
+                imageLoader = new DiscordLoader(this, token, channelId, getDataFolder().toString() + "/tmpicon");
+            } catch (LoginException e) {
+                getLogger().info("Discord token was invalid, defaulting to file storage");
+                imageLoader = new FileLoader(this, getDataFolder().toString() + "/tmpicon");
+            }
+        } else {
+            imageLoader = new FileLoader(this, getDataFolder().toString() + "/tmpicon");
         }
 
         //serverIcons = getFavicons();
