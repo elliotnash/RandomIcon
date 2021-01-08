@@ -1,4 +1,4 @@
-name: Randomiconpaper
+name: RandomIcon
 version: ${project.version}
 main: org.elliotnash.randomicon.spigot.SpigotMain
 api-version: 1.16
