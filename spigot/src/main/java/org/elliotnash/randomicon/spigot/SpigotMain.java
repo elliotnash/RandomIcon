@@ -10,10 +10,6 @@ import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.CachedServerIcon;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 import java.util.LinkedList;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -30,57 +26,16 @@ public final class SpigotMain extends JavaPlugin implements Listener {
         plugin = this;
         bukkitAudiences = BukkitAudiences.create(plugin);
 
-        serverIcons = getFavicons();
+        //serverIcons = getFavicons();
 
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
-        getCommand("ripreload").setExecutor(new ReloadListener());
+        getCommand("rireload").setExecutor(new ReloadListener());
 
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-    }
-
-    public LinkedList<CachedServerIcon> getFavicons(){
-        File dir = new File(getDataFolder() + File.separator + "serverIcons");
-        File[] directoryListing = dir.listFiles();
-        LinkedList<CachedServerIcon> favicons = new LinkedList<>();
-        if (directoryListing != null) {
-            for (File f : directoryListing) {
-                if(f.getName().contains(".png")){
-                    try {
-                        BufferedImage i = ImageIO.read(new File(dir + File.separator + f.getName()));
-                        int width = i.getWidth();
-                        int height = i.getHeight();
-                        if(width == 64 && height == 64){
-                            favicons.add(getServer().loadServerIcon(i));
-                        }else{
-                            if(!f.isHidden()){
-                                getLogger().info("One of your server icons is not 64x64! It will not be used!");
-                            }
-                        }
-                    }catch(IOException e){
-                        getLogger().info("Something bad occured! Please report this to Ethemoose (RandomIconSpigot dev)");
-                        getLogger().info("Include this, and the error below with the report");
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    if(!f.isHidden()){
-                        getLogger().info("One of your server icons does not end in .png! It will not be used!");
-                    }
-                }
-            }
-        }else{
-            if (!getDataFolder().isDirectory()){
-                getDataFolder().mkdir();
-            }
-            getLogger().info("The serverIcons directory is missing! Trying to create one now..");
-            dir.mkdir();
-        }
-        return favicons;
     }
 
     MinecraftFont font = new MinecraftFont();
@@ -99,7 +54,7 @@ public final class SpigotMain extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPaperServerListPing(ServerListPingEvent event){
+    public void onServerListPing(ServerListPingEvent event){
         if (!serverIcons.isEmpty())
             event.setServerIcon(serverIcons.get(rand.nextInt(serverIcons.size())));
 

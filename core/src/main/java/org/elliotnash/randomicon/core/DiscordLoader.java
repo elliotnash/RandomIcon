@@ -27,15 +27,15 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
     //callbacks for event
     private final ImageListener listener;
 
-    public List<BufferedImage> getImages(){
-        return images.stream().map(image -> {
+    public void getImages(){
+        listener.onLoad(images.stream().map(image -> {
             try {
                 return ImageIO.read(image);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList()));
     }
 
     public DiscordLoader(ImageListener listener, String token, String channelid, String downloadPath) throws LoginException {
@@ -59,7 +59,7 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
         }
 
         //dispatch on load event
-        listener.onLoad(getImages());
+        getImages();
 
     }
 

@@ -5,5 +5,5 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public interface ImageLoader {
-    List<BufferedImage> getImages();
+    void getImages();
 }

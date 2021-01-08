@@ -1,8 +1,14 @@
-name: RandomIcon
+name: Randomiconpaper
 version: ${project.version}
-main: org.elliotnash.randomicon.spigot.SpigotMain
+main: randomiconpaper.randomiconpaper.RandomIconPaper
 api-version: 1.16
-load: STARTUP
 authors: [ Elliot ]
-description: Plugin to change the server icon to a different image each ping
-website: elliotnash.org
+load: STARTUP
+description: Sets the server icon to a random Icon from a folder each ping
+commands:
+  ripreload:
+    description: Reload rip icons
+permissions:
+  rip.reload:
+    description: lets a player reload the config
+    default: op
