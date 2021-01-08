@@ -12,6 +12,9 @@ public class FileLoader implements ImageLoader{
     private final ImageListener listener;
     public FileLoader(ImageListener listener, String path) {
         dir = new File(path);
+        if (!dir.isDirectory()){
+            dir.mkdirs();
+        }
         this.listener = listener;
     }
     @Override
