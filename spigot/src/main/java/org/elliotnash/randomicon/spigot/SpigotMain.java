@@ -28,7 +28,7 @@ import javax.imageio.ImageIO;
 import javax.security.auth.login.LoginException;
 
 public final class SpigotMain extends JavaPlugin implements Listener, ImageListener {
-    public static List<CachedServerIcon> serverIcons;
+    public static List<CachedServerIcon> serverIcons = new LinkedList<>();
     public static SpigotMain plugin;
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
