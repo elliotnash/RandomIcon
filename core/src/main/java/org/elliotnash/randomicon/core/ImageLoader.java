@@ -1,4 +1,4 @@
-package org.elliotnash.randomicon.spigot.core;
+package org.elliotnash.randomicon.core;
 
 import javax.security.auth.login.LoginException;
 import java.awt.image.BufferedImage;

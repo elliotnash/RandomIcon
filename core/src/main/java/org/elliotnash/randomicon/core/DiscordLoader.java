@@ -1,4 +1,4 @@
-package org.elliotnash.randomicon.spigot.core;
+package org.elliotnash.randomicon.core;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-class DiscordLoader extends ListenerAdapter implements ImageLoader {
+public class DiscordLoader extends ListenerAdapter implements ImageLoader {
 
     public List<File> images = new LinkedList<File>();
     private final String channelid;

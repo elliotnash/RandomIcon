@@ -1,4 +1,4 @@
-package org.elliotnash.randomicon.spigot.core;
+package org.elliotnash.randomicon.core;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
