@@ -8,20 +8,40 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import javax.imageio.ImageIO;
 import javax.security.auth.login.LoginException;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
-public class DiscordLoader extends ListenerAdapter {
+class DiscordLoader extends ListenerAdapter implements ImageLoader {
 
     public List<File> images = new LinkedList<File>();
     private final String channelid;
+    private final String downloadPath;
+    //callbacks for event
+    private final ImageListener listener;
 
-    public DiscordLoader(String token, String channelid) throws LoginException {
+    public List<BufferedImage> getImages(){
+        return images.stream().map(image -> {
+            try {
+                return ImageIO.read(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
+    }
+
+    public DiscordLoader(ImageListener listener, String token, String channelid, String downloadPath) throws LoginException {
         this.channelid = channelid;
+        this.downloadPath = downloadPath;
+        this.listener = listener;
         JDA jda = JDABuilder.createDefault(token).build();
         jda.addEventListener(this);
     }
@@ -37,10 +57,15 @@ public class DiscordLoader extends ListenerAdapter {
                 message.delete().queue();
             }
         }
+
+        //dispatch on load event
+        listener.onLoad(getImages());
+
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event){
+
         if(event.getChannel().getId().equals(channelid)){
             List<File> messageAtt = is64(event.getMessage().getAttachments());
             images.addAll(messageAtt);
@@ -56,7 +81,7 @@ public class DiscordLoader extends ListenerAdapter {
             if (att.isImage()){
                 if (att.getWidth() == 64 && att.getHeight() == 64 && att.getFileExtension().equals("png")) {
                     try {
-                        File file = att.downloadToFile("downloads/"+att.getFileName()).get();
+                        File file = att.downloadToFile(downloadPath+"/"+att.getFileName()).get();
                         if(!containsImage(images, att))
                             files.add(file);
                     } catch (InterruptedException | ExecutionException e) {
