@@ -1,14 +1,14 @@
 name: Randomiconpaper
 version: ${project.version}
-main: randomiconpaper.randomiconpaper.RandomIconPaper
+main: org.elliotnash.randomicon.spigot.SpigotMain
 api-version: 1.16
 authors: [ Elliot ]
 load: STARTUP
 description: Sets the server icon to a random Icon from a folder each ping
 commands:
-  ripreload:
+  rireload:
     description: Reload rip icons
 permissions:
-  rip.reload:
+  ri.reload:
     description: lets a player reload the config
     default: op

@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -39,6 +40,11 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
     }
 
     public DiscordLoader(ImageListener listener, String token, String channelid, String downloadPath) throws LoginException {
+        File file = new File(downloadPath);
+        if (!file.isDirectory()){
+            file.mkdirs();
+        }
+
         this.channelid = channelid;
         this.downloadPath = downloadPath;
         this.listener = listener;
@@ -71,6 +77,15 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
             images.addAll(messageAtt);
             if (messageAtt.isEmpty()){
                 event.getMessage().delete().queue();
+            } else {
+                listener.onLoad(messageAtt.stream().map(image -> {
+                    try {
+                        return ImageIO.read(image);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }).collect(Collectors.toList()));
             }
         }
     }

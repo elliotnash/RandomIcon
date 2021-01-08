@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ImageListener {
     //no documentation :]
-    void onMessageReceived();
+    void onMessageReceived(List<BufferedImage> images);
     void onMessageDeleted();
     void onLoad(List<BufferedImage> images);
 }
