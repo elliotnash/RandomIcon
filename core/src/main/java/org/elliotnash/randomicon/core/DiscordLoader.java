@@ -78,7 +78,7 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
             if (messageAtt.isEmpty()){
                 event.getMessage().delete().queue();
             } else {
-                listener.onLoad(messageAtt.stream().map(image -> {
+                listener.onMessageReceived(messageAtt.stream().map(image -> {
                     try {
                         return ImageIO.read(image);
                     } catch (IOException e) {
