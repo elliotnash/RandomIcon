@@ -97,8 +97,7 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
                 if (att.getWidth() == 64 && att.getHeight() == 64 && att.getFileExtension().equals("png")) {
                     try {
                         File file = att.downloadToFile(downloadPath+"/"+att.getFileName()).get();
-                        if(!containsImage(images, att))
-                            files.add(file);
+                        files.add(file);
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
@@ -110,15 +109,15 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
         return files;
     }
 
-    public boolean containsImage(List<File> files, Message.Attachment att) {
-        String checkName = att.getFileName();
-        int checkSize = att.getSize();
-        for (File file : files){
-            if (file.getName().equals(checkName) && file.length() == checkSize)
-                return true;
-        }
-        return false;
-    }
+//    public boolean containsImage(List<File> files, Message.Attachment att) {
+//        String checkName = att.getFileName();
+//        int checkSize = att.getSize();
+//        for (File file : files){
+//            if (file.getName().equals(checkName) && file.length() == checkSize)
+//                return true;
+//        }
+//        return false;
+//    }
 
 
 
