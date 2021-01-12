@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.CachedServerIcon;
 
 import java.awt.image.BufferedImage;
@@ -16,9 +17,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.elliotnash.JenkinsUpdater;
 import org.elliotnash.randomicon.core.DiscordLoader;
 import org.elliotnash.randomicon.core.FileLoader;
 import org.elliotnash.randomicon.core.ImageListener;
@@ -33,14 +36,18 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
     public static FileConfiguration config;
+    public static Logger logger;
     Random rand = new Random();
 
     @Override
     public void onEnable() {
 
         plugin = this;
+        logger = getLogger();
         bukkitAudiences = BukkitAudiences.create(plugin);
         config = getConfig();
+
+        updateCheck();
 
         if (!config.contains("discord")){
             saveDefaultConfig();
@@ -74,6 +81,24 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
         // Plugin shutdown logic
     }
 
+    private void updateCheck(){
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                String version = plugin.getDescription().getVersion();
+                JenkinsUpdater updater = new JenkinsUpdater("https://ci.elliotnash.org/job/Minecraft/job/ChestLocker", version);
+                if (updater.shouldUpdate) {
+                    int versionDiff = updater.latestVersion - updater.currentVersion;
+                    if (versionDiff == 1)
+                        logger.warning("ChestLocker is 1 version behind");
+                    else
+                        logger.warning("ChestLocker is " + versionDiff + " versions behind");
+                    logger.warning("Please download a new build from https://ci.elliotnash.org/job/Minecraft/job/ChestLocker/");
+                }
+            }
+        }.runTaskLaterAsynchronously(this, 100);
+    }
+
     MinecraftFont font = new MinecraftFont();
     String center(String str){
 
@@ -96,7 +121,7 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
 
         StringBuilder sb = new StringBuilder();
         for (Player player : getServer().getOnlinePlayers()){
-            sb.append(player.getName()+", ");
+            sb.append(player.getName()).append(", ");
         }
         if (sb.length()>2) {
             sb.setLength(sb.length() - 2);
