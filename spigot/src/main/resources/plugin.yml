@@ -1,5 +1,5 @@
 name: RandomIcon
-version: ${project.version}
+version: ${jenkins.buildNumber}
 main: org.elliotnash.randomicon.spigot.SpigotMain
 api-version: 1.16
 authors: [ Elliot ]
