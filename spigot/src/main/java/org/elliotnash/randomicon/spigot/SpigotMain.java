@@ -86,14 +86,14 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
             @Override
             public void run() {
                 String version = plugin.getDescription().getVersion();
-                JenkinsUpdater updater = new JenkinsUpdater("https://ci.elliotnash.org/job/Minecraft/job/ChestLocker", version);
+                JenkinsUpdater updater = new JenkinsUpdater("https://ci.elliotnash.org/job/Minecraft/job/RandomIcon", version);
                 if (updater.shouldUpdate) {
                     int versionDiff = updater.latestVersion - updater.currentVersion;
                     if (versionDiff == 1)
-                        logger.warning("ChestLocker is 1 version behind");
+                        logger.warning("RandomIcon is 1 version behind");
                     else
-                        logger.warning("ChestLocker is " + versionDiff + " versions behind");
-                    logger.warning("Please download a new build from https://ci.elliotnash.org/job/Minecraft/job/ChestLocker/");
+                        logger.warning("RandomIcon is " + versionDiff + " versions behind");
+                    logger.warning("Please download a new build from https://ci.elliotnash.org/job/Minecraft/job/RandomIcon/");
                 }
             }
         }.runTaskLaterAsynchronously(this, 100);
