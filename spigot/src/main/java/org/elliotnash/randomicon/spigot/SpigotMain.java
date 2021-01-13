@@ -63,10 +63,11 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
                 imageLoader = new DiscordLoader(this, token, channelId, getDataFolder().toString() + "/tmpicon");
             } catch (LoginException e) {
                 getLogger().info("Discord token was invalid, defaulting to file storage");
-                imageLoader = new FileLoader(this, getDataFolder().toString() + "/tmpicon");
+                imageLoader = new FileLoader(this, getDataFolder().toString() + "/serverIcons");
+                
             }
         } else {
-            imageLoader = new FileLoader(this, getDataFolder().toString() + "/tmpicon");
+            imageLoader = new FileLoader(this, getDataFolder().toString() + "/serverIcons");
         }
 
         //serverIcons = getFavicons();

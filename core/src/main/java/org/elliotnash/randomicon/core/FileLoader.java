@@ -16,6 +16,10 @@ public class FileLoader implements ImageLoader{
             dir.mkdirs();
         }
         this.listener = listener;
+
+        //fetch images
+        getImages();
+
     }
     @Override
     public void getImages() {
@@ -38,7 +42,7 @@ public class FileLoader implements ImageLoader{
                 }
             }
         }else{
-            dir.mkdirs();
+            System.out.println(dir.mkdirs());
         }
         listener.onLoad(favicons);
     }
