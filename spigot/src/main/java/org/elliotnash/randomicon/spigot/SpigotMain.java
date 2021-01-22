@@ -75,10 +75,10 @@ public final class SpigotMain extends JavaPlugin implements ImageListener {
         try {
             isPapermc = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData") != null;
         } catch (ClassNotFoundException e) {
-            Bukkit.getLogger().info("Paper not detected. Please switch to papermc for better performance and improved plugin support");
-            Bukkit.getLogger().info("https://papermc.io/");
+            logger.info("Paper not detected. Please switch to papermc for better performance and improved plugin support");
+            logger.info("https://papermc.io/");
         } if (isPapermc) {
-            Bukkit.getLogger().info("Paper detected, loading support for paper's events");
+            logger.info("Paper detected, loading support for paper's events");
             Bukkit.getServer().getPluginManager().registerEvents(new PaperPingListener(), this);
         } else {
             Bukkit.getServer().getPluginManager().registerEvents(new SpigotPingListener(), this);
