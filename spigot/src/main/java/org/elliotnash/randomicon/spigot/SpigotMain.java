@@ -26,18 +26,19 @@ import org.elliotnash.randomicon.core.DiscordLoader;
 import org.elliotnash.randomicon.core.FileLoader;
 import org.elliotnash.randomicon.core.ImageListener;
 import org.elliotnash.randomicon.core.ImageLoader;
+import org.elliotnash.randomicon.spigot.listeners.PaperPingListener;
+import org.elliotnash.randomicon.spigot.listeners.SpigotPingListener;
 
-import javax.imageio.ImageIO;
 import javax.security.auth.login.LoginException;
 
-public final class SpigotMain extends JavaPlugin implements Listener, ImageListener {
+public final class SpigotMain extends JavaPlugin implements ImageListener {
     public static List<CachedServerIcon> serverIcons = new LinkedList<>();
     public static SpigotMain plugin;
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
     public static FileConfiguration config;
     public static Logger logger;
-    Random rand = new Random();
+    public static Random rand = new Random();
 
     @Override
     public void onEnable() {
@@ -70,9 +71,19 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
             imageLoader = new FileLoader(this, getDataFolder().toString() + "/serverIcons");
         }
 
-        //serverIcons = getFavicons();
+        boolean isPapermc = false;
+        try {
+            isPapermc = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData") != null;
+        } catch (ClassNotFoundException e) {
+            Bukkit.getLogger().info("Paper not detected. Please switch to papermc for better performance and improved plugin support");
+            Bukkit.getLogger().info("https://papermc.io/");
+        } if (isPapermc) {
+            Bukkit.getLogger().info("Paper detected, loading support for paper's events");
+            Bukkit.getServer().getPluginManager().registerEvents(new PaperPingListener(), this);
+        } else {
+            Bukkit.getServer().getPluginManager().registerEvents(new SpigotPingListener(), this);
+        }
 
-        Bukkit.getServer().getPluginManager().registerEvents(this, this);
         getCommand("rireload").setExecutor(new ReloadListener());
 
     }
@@ -100,8 +111,8 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
         }.runTaskLaterAsynchronously(this, 100);
     }
 
-    MinecraftFont font = new MinecraftFont();
-    String center(String str){
+    static MinecraftFont font = new MinecraftFont();
+    public static String center(String str){
 
         int pixelsToAdd = 269-getLength(str);
 
@@ -110,34 +121,9 @@ public final class SpigotMain extends JavaPlugin implements Listener, ImageListe
         return spacer+str+"§r";
     }
 
-    int getLength(String str){
+    public static int getLength(String str){
         String noFormat = str.replaceAll("(§[0-9a-fA-FxXkKmMoOlLnNrR])+", "");
         return font.getWidth(noFormat);
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onServerListPing(ServerListPingEvent event){
-        if (!serverIcons.isEmpty())
-            event.setServerIcon(serverIcons.get(rand.nextInt(serverIcons.size())));
-
-        StringBuilder sb = new StringBuilder();
-        for (Player player : getServer().getOnlinePlayers()){
-            sb.append(player.getName()).append(", ");
-        }
-        if (sb.length()>2) {
-            sb.setLength(sb.length() - 2);
-        } else {
-            sb.append("No players online");
-        }
-        String players = sb.toString();
-        if (getLength(players)>269){
-            int onlinePlayers = getServer().getOnlinePlayers().size();
-            if (onlinePlayers!=1)
-                players = (getServer().getOnlinePlayers().size()+" players online");
-            else players = (getServer().getOnlinePlayers().size()+" player online");
-        }
-
-        event.setMotd(center("§x§5§5§5§5§a§5There is one imposter among us")+"\n"+center(players));
     }
 
     @Override
