@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.elliotnash.randomicon</groupId>
+            <groupId>org.elliotnash.randomicon.spigot</groupId>
             <artifactId>RandomIcon-Spigot</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
