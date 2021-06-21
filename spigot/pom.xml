@@ -28,6 +28,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>org.elliotnash.randomicon.spigot</groupId>
     <artifactId>RandomIcon-Spigot</artifactId>
     <packaging>jar</packaging>
 
