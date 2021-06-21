@@ -20,6 +20,12 @@
             <version>${project.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.elliotnash.randomicon.velocity</groupId>
+            <artifactId>RandomIcon-Velocity</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
