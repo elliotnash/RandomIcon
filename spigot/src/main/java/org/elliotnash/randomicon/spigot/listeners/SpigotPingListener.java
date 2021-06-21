@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
+import org.elliotnash.randomicon.core.DefaultFontInfo;
 
 import static org.bukkit.Bukkit.getServer;
 import static org.elliotnash.randomicon.spigot.RandomIcon.*;
@@ -25,13 +26,13 @@ public class SpigotPingListener implements Listener {
             sb.append("No players online");
         }
         String players = sb.toString();
-        if (getLength(players)>269){
+        if (DefaultFontInfo.getStringLength(players)>269){
             int onlinePlayers = getServer().getOnlinePlayers().size();
             if (onlinePlayers!=1)
                 players = (getServer().getOnlinePlayers().size()+" players online");
             else players = (getServer().getOnlinePlayers().size()+" player online");
         }
 
-        event.setMotd(center("§x§5§5§5§5§a§5There is one imposter among us")+"\n"+center(players));
+        event.setMotd(DefaultFontInfo.center("§x§5§5§5§5§a§5There is one imposter among us")+"\n"+DefaultFontInfo.center(players));
     }
 }

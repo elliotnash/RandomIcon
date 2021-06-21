@@ -100,21 +100,6 @@ public final class RandomIcon extends JavaPlugin implements ImageListener {
         }.runTaskLaterAsynchronously(this, 100);
     }
 
-    static MinecraftFont font = new MinecraftFont();
-    public static String center(String str){
-
-        int pixelsToAdd = 269-getLength(str);
-
-        String spacer = " ";
-        spacer = spacer.repeat((pixelsToAdd/2)/4);
-        return spacer+str+"§r";
-    }
-
-    public static int getLength(String str){
-        String noFormat = str.replaceAll("(§[0-9a-fA-FxXkKmMoOlLnNrR])+", "");
-        return font.getWidth(noFormat);
-    }
-
     @Override
     public void onMessageReceived(List<BufferedImage> images) {
         serverIcons.addAll(images.stream().map(image -> {

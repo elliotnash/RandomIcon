@@ -13,7 +13,7 @@ import org.slf4j.Logger;
         version = "1.0-SNAPSHOT",
         authors = {"Elliot Nash"}
 )
-public class RandomIconVelocity {
+public class RandomIcon {
 
     @Inject
     private Logger logger;
@@ -21,4 +21,7 @@ public class RandomIconVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
     }
+
+    //TODO add update checker for velocity
+
 }
