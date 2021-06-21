@@ -167,5 +167,11 @@
             <version>1.1.8</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.elliotnash.randomicon</groupId>
+            <artifactId>RandomIcon-Core</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

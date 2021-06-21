@@ -18,7 +18,7 @@ public class ReloadListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("rip.reload")) {
+        if (sender.hasPermission("ri.reload")) {
             imageLoader.getImages();
 
             Audience audience;

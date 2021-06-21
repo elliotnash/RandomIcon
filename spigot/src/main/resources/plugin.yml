@@ -8,7 +8,7 @@ load: STARTUP
 description: Sets the server icon to a random Icon from a folder each ping
 commands:
   rireload:
-    description: Reload rip icons
+    description: Reload RandomIcon icons
 permissions:
   ri.reload:
     description: lets a player reload the config
