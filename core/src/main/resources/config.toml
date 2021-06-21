@@ -1,0 +1,7 @@
+# Set this to true to get the server icons from a discord channel *this will clear all text in the channel, use a new channel*
+# You will also need to configure the discord credentials
+useDiscord="false"
+# The discord token.
+token="TOKEN"
+# The id of the channel you want icons to load from
+channelID="CHANNEL_ID"

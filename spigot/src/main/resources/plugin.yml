@@ -1,7 +1,7 @@
 name: RandomIcon
 version: ${jenkins.buildNumber}
 website: https://ci.elliotnash.org/job/Minecraft/job/RandomIcon
-main: org.elliotnash.randomicon.spigot.SpigotMain
+main: org.elliotnash.randomicon.spigot.RandomIcon
 api-version: 1.16
 authors: [ Elliot ]
 load: STARTUP

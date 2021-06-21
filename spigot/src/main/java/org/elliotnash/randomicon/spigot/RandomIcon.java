@@ -20,6 +20,7 @@ import org.elliotnash.randomicon.core.DiscordLoader;
 import org.elliotnash.randomicon.core.FileLoader;
 import org.elliotnash.randomicon.core.ImageListener;
 import org.elliotnash.randomicon.core.ImageLoader;
+import org.elliotnash.randomicon.core.config.ConfigManager;
 import org.elliotnash.randomicon.spigot.listeners.PaperPingListener;
 import org.elliotnash.randomicon.spigot.listeners.SpigotPingListener;
 
@@ -30,7 +31,7 @@ public final class RandomIcon extends JavaPlugin implements ImageListener {
     public static RandomIcon plugin;
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
-    public static FileConfiguration config;
+    public static ConfigManager config;
     public static Logger logger;
     public static Random rand = new Random();
 
@@ -40,22 +41,16 @@ public final class RandomIcon extends JavaPlugin implements ImageListener {
         plugin = this;
         logger = getLogger();
         bukkitAudiences = BukkitAudiences.create(plugin);
-        config = getConfig();
 
         updateCheck();
 
-        if (!config.contains("discord")){
-            saveDefaultConfig();
-            config = getConfig();
-        }
+        config = new ConfigManager(getDataFolder()+"/config.toml");
+        config.read();
 
-        boolean useDiscord = config.getBoolean("useDiscord");
-        String token = config.getString("token");
-        String channelId = config.getString("channelid");
-
-        if (useDiscord) {
+        if (config.getUseDiscord()) {
             try {
-                imageLoader = new DiscordLoader(this, token, channelId, getDataFolder().toString() + "/tmpicon");
+                imageLoader = new DiscordLoader(this, config.getToken(), config.getChannel(),
+                        getDataFolder().toString() + "/tmpicon");
             } catch (LoginException e) {
                 getLogger().info("Discord token was invalid, defaulting to file storage");
                 imageLoader = new FileLoader(this, getDataFolder().toString() + "/serverIcons");

@@ -1,5 +1,0 @@
-# set this to true to get the server icons from a discord channel *this will clear all text in the channel, use a new channel*
-# you will also need to configure the discord credentials
-useDiscord: false
-token: 'TOKEN'
-channelid: 'CHANNEL_ID'

@@ -7,10 +7,11 @@ import com.velocitypowered.api.plugin.Plugin;
 import org.slf4j.Logger;
 
 @Plugin(
-        id = "RandomIcon-Velocity",
+        id = "randomicon-velocity",
         name = "RandomIcon-Velocity",
+        description = "Sets the server icon to a random Icon from a folder each ping",
         version = "1.0-SNAPSHOT",
-        authors = {"Elliot"}
+        authors = {"Elliot Nash"}
 )
 public class RandomIconVelocity {
 
