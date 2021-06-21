@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
 import static org.bukkit.Bukkit.getServer;
-import static org.elliotnash.randomicon.spigot.SpigotMain.*;
+import static org.elliotnash.randomicon.spigot.RandomIcon.*;
 
 public class SpigotPingListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)

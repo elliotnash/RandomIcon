@@ -1,7 +1,6 @@
 package org.elliotnash.randomicon.spigot;
 
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
@@ -10,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static org.elliotnash.randomicon.spigot.SpigotMain.*;
+import static org.elliotnash.randomicon.spigot.RandomIcon.*;
 
 public class ReloadListener implements CommandExecutor {
     TextComponent reloadSuccess = Component.text("Config successfully reloaded").color(TextColor.color(0x6565a6));

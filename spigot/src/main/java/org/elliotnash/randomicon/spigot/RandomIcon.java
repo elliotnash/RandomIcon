@@ -2,18 +2,12 @@ package org.elliotnash.randomicon.spigot;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.CachedServerIcon;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.LinkedList;
@@ -31,9 +25,9 @@ import org.elliotnash.randomicon.spigot.listeners.SpigotPingListener;
 
 import javax.security.auth.login.LoginException;
 
-public final class SpigotMain extends JavaPlugin implements ImageListener {
+public final class RandomIcon extends JavaPlugin implements ImageListener {
     public static List<CachedServerIcon> serverIcons = new LinkedList<>();
-    public static SpigotMain plugin;
+    public static RandomIcon plugin;
     public static BukkitAudiences bukkitAudiences;
     public static ImageLoader imageLoader;
     public static FileConfiguration config;

@@ -5,10 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
 
 import static org.bukkit.Bukkit.getServer;
-import static org.elliotnash.randomicon.spigot.SpigotMain.*;
+import static org.elliotnash.randomicon.spigot.RandomIcon.*;
 
 public class PaperPingListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
