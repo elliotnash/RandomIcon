@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.imageio.ImageIO;
 import javax.security.auth.login.LoginException;
@@ -48,7 +50,10 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
         this.channelid = channelid;
         this.downloadPath = downloadPath;
         this.listener = listener;
-        JDA jda = JDABuilder.createDefault(token).build();
+        JDA jda = JDABuilder.createDefault(token,
+                GatewayIntent.GUILD_MEMBERS,
+                GatewayIntent.GUILD_MESSAGES)
+                .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOTE).build();
         jda.addEventListener(this);
     }
 
