@@ -79,7 +79,9 @@ public final class RandomIcon extends JavaPlugin implements ImageListener {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if (imageLoader instanceof DiscordLoader){
+            ((DiscordLoader) imageLoader).shutdown();
+        }
     }
 
     private void updateCheck(){

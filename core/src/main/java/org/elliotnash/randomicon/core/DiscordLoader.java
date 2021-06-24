@@ -29,6 +29,7 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
     private final String downloadPath;
     //callbacks for event
     private final ImageListener listener;
+    private final JDA jda;
 
     public void getImages(){
         listener.onLoad(images.stream().map(image -> {
@@ -50,16 +51,19 @@ public class DiscordLoader extends ListenerAdapter implements ImageLoader {
         this.channelid = channelid;
         this.downloadPath = downloadPath;
         this.listener = listener;
-        JDA jda = JDABuilder.createDefault(token,
+        jda = JDABuilder.createDefault(token,
                 GatewayIntent.GUILD_MEMBERS,
                 GatewayIntent.GUILD_MESSAGES)
                 .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOTE).build();
         jda.addEventListener(this);
     }
+    public void shutdown(){
+        jda.shutdown();
+    }
 
     @Override
     public void onReady(ReadyEvent event){
-        TextChannel channel = event.getJDA().getTextChannelById(channelid);
+        TextChannel channel = jda.getTextChannelById(channelid);
         MessageHistory history = channel.getHistoryFromBeginning(100).complete();
         for (Message message : history.getRetrievedHistory()){
             List<File> messageAtt = is64(message.getAttachments());
